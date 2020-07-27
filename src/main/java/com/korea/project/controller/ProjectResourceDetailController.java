@@ -1,7 +1,6 @@
 package com.korea.project.controller;
 
 
-import com.korea.project.entity.Project;
 import com.korea.project.entity.ProjectResourceDetail;
 import com.korea.project.service.ProjectResourceDetailService;
 import org.springframework.beans.factory.annotation.Autowired;

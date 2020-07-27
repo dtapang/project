@@ -5,15 +5,40 @@ import java.util.Objects;
 
 @Entity
 public class ProjectResourceDetail {
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private Byte editable;
     private String extracolsvalue;
     private String itemid;
     private Integer price;
     private Integer quantity;
+/*
+    @ManyToOne
+    @JoinColumn(name = "projectid")
+    private Project projectByProjectId;
 
+    public Project getProjectByProjectId() {
+        return projectByProjectId;
+    }
+
+    public void setProjectByProjectId(Project projectByProjectId) {
+        this.projectByProjectId = projectByProjectId;
+    }
+
+    public Resource getResourceByResourceId() {
+        return resourceByResourceId;
+    }
+
+    public void setResourceByResourceId(Resource resourceByResourceId) {
+        this.resourceByResourceId = resourceByResourceId;
+    }
+
+    @OneToOne
+    @JoinColumn(name="resourceid")
+    private Resource resourceByResourceId;
+
+*/
+
+    @Id
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;

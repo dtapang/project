@@ -10,7 +10,7 @@ public interface ProjectService {
     List<Project> readAll();
     List<Project> readByName(String name);
     Project readOneById(int id);
-    Project update(int id, String name, String code);
+    Project update(int id, String name);
     boolean delete(int id);
     boolean addExtraColumn(int id, String colName, String colType);
 

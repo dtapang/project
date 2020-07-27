@@ -1,8 +1,6 @@
 package com.korea.project.service;
 
-import com.korea.project.entity.Project;
 import com.korea.project.entity.ProjectResourceDetail;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

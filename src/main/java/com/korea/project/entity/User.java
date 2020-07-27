@@ -57,7 +57,8 @@ public class User {
         this.lastname = lastname;
     }
 
-    @Column(name = "password", nullable = false)
+    @Basic
+    @Column(name = "password", nullable = false, length = 255)
     public String getPassword() {
         return password;
     }

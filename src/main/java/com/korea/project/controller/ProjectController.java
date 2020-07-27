@@ -1,7 +1,7 @@
 package com.korea.project.controller;
 
-import org.springframework.http.ResponseEntity;
 import com.korea.project.entity.Project;
+import org.springframework.http.ResponseEntity;
 import com.korea.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +34,8 @@ public class ProjectController {
     }
 
     @PutMapping("/project/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody Project project) {
-        service.update(id,project.getName(),project.getCode());
+    public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody String name) {
+        service.update(id,name);
         return ResponseEntity.ok("Success");
     }
 

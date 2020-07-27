@@ -6,12 +6,23 @@ import java.util.Objects;
 @Entity
 public class Project {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String extracolsname;
     private String extracolstype;
     private String name;
-    private String code;
+
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private User userByUserid;
+
+    public User getUserByUserid() {
+        return userByUserid;
+    }
+
+    public void setUserByUserid(User user) {
+        this.userByUserid = user;
+    }
 
 
     @Column(name = "id", nullable = false)
@@ -53,16 +64,6 @@ public class Project {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "code", nullable = false, length = 45)
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,12 +72,11 @@ public class Project {
         return Objects.equals(id, project.id) &&
                 Objects.equals(extracolsname, project.extracolsname) &&
                 Objects.equals(extracolstype, project.extracolstype) &&
-                Objects.equals(name, project.name) &&
-                Objects.equals(code, project.code);
+                Objects.equals(name, project.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, extracolsname, extracolstype, name, code);
+        return Objects.hash(id, extracolsname, extracolstype, name);
     }
 }

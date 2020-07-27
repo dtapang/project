@@ -1,7 +1,7 @@
 package com.korea.project.service.impl;
 
-import com.korea.project.repository.ProjectRepository;
 import com.korea.project.entity.Project;
+import com.korea.project.repository.ProjectRepository;
 import com.korea.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +36,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project update(int id, String name, String code) {
+    public Project update(int id, String name) {
         Optional<Project> optional = projectRepository.findById(id);
         if (optional.isPresent()) {
             Project project1 = optional.get();
             project1.setName(name);
-            project1.setCode(code);
             return projectRepository.save(project1);
         }
 

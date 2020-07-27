@@ -1,9 +1,6 @@
 package com.korea.project.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -11,6 +8,19 @@ public class Resource {
     private Integer id;
     private String code;
     private String name;
+/*
+    @ManyToOne
+    @JoinColumn(name="parentid", referencedColumnName = "id")
+    private Resource parentByParentId;
+
+    public Resource getParentByParentId() {
+        return parentByParentId;
+    }
+
+    public void setParentByParentId(Resource user) {
+        this.parentByParentId = user;
+    }
+    */
 
     @Id
     @Column(name = "id", nullable = false)
