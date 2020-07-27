@@ -1,20 +1,19 @@
 package com.korea.project.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class Project {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private String extracolsname;
     private String extracolstype;
     private String name;
     private String code;
 
-    @Id
+
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;

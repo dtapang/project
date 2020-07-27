@@ -1,4 +1,4 @@
-package com.korea.project;
+package com.korea.project.config;
 
 import com.korea.project.filters.JwtTokenFilter;
 import com.korea.project.service.impl.DAOUserDetailsService;

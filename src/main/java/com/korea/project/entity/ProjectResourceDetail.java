@@ -1,13 +1,12 @@
 package com.korea.project.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Projectresourcedetail {
+public class ProjectResourceDetail {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private Byte editable;
     private String extracolsvalue;
@@ -15,7 +14,6 @@ public class Projectresourcedetail {
     private Integer price;
     private Integer quantity;
 
-    @Id
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -79,7 +77,7 @@ public class Projectresourcedetail {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Projectresourcedetail that = (Projectresourcedetail) o;
+        ProjectResourceDetail that = (ProjectResourceDetail) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(editable, that.editable) &&
                 Objects.equals(extracolsvalue, that.extracolsvalue) &&
