@@ -1,18 +1,12 @@
 package com.korea.project.entity;
 
-
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name="projectresourcedetail")
 public class Projectresourcedetail {
     private Integer id;
     private Byte editable;
@@ -20,11 +14,8 @@ public class Projectresourcedetail {
     private String itemid;
     private Integer price;
     private Integer quantity;
-    private Project projectByProjectid;
-    private Resource resourceByResourceid;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -34,7 +25,7 @@ public class Projectresourcedetail {
         this.id = id;
     }
 
-
+    @Basic
     @Column(name = "editable", nullable = false)
     public Byte getEditable() {
         return editable;
@@ -44,7 +35,7 @@ public class Projectresourcedetail {
         this.editable = editable;
     }
 
-
+    @Basic
     @Column(name = "extracolsvalue", nullable = true, length = 1000)
     public String getExtracolsvalue() {
         return extracolsvalue;
@@ -54,7 +45,7 @@ public class Projectresourcedetail {
         this.extracolsvalue = extracolsvalue;
     }
 
-
+    @Basic
     @Column(name = "itemid", nullable = true, length = 50)
     public String getItemid() {
         return itemid;
@@ -64,7 +55,7 @@ public class Projectresourcedetail {
         this.itemid = itemid;
     }
 
-
+    @Basic
     @Column(name = "price", nullable = true)
     public Integer getPrice() {
         return price;
@@ -74,7 +65,7 @@ public class Projectresourcedetail {
         this.price = price;
     }
 
-
+    @Basic
     @Column(name = "quantity", nullable = true)
     public Integer getQuantity() {
         return quantity;
@@ -100,25 +91,5 @@ public class Projectresourcedetail {
     @Override
     public int hashCode() {
         return Objects.hash(id, editable, extracolsvalue, itemid, price, quantity);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "projectid", referencedColumnName = "id", nullable = false)
-    public Project getProjectByProjectid() {
-        return projectByProjectid;
-    }
-
-    public void setProjectByProjectid(Project projectByProjectid) {
-        this.projectByProjectid = projectByProjectid;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "resourceid", referencedColumnName = "id", nullable = false)
-    public Resource getResourceByResourceid() {
-        return resourceByResourceid;
-    }
-
-    public void setResourceByResourceid(Resource resourceByResourceid) {
-        this.resourceByResourceid = resourceByResourceid;
     }
 }
