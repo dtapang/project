@@ -1,29 +1,20 @@
 package com.korea.project.entity;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name="project")
 public class Project {
     private Integer id;
     private String extracolsname;
     private String extracolstype;
     private String name;
-    private User userByUserid;
-    private Collection<Projectresourcedetail> projectresourcedetailsById;
+    private String code;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -33,6 +24,7 @@ public class Project {
         this.id = id;
     }
 
+    @Basic
     @Column(name = "extracolsname", nullable = true, length = 1000)
     public String getExtracolsname() {
         return extracolsname;
@@ -42,6 +34,7 @@ public class Project {
         this.extracolsname = extracolsname;
     }
 
+    @Basic
     @Column(name = "extracolstype", nullable = true, length = 1000)
     public String getExtracolstype() {
         return extracolstype;
@@ -51,6 +44,7 @@ public class Project {
         this.extracolstype = extracolstype;
     }
 
+    @Basic
     @Column(name = "name", nullable = false, length = 50)
     public String getName() {
         return name;
@@ -58,6 +52,16 @@ public class Project {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Basic
+    @Column(name = "code", nullable = false, length = 45)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override
@@ -68,30 +72,12 @@ public class Project {
         return Objects.equals(id, project.id) &&
                 Objects.equals(extracolsname, project.extracolsname) &&
                 Objects.equals(extracolstype, project.extracolstype) &&
-                Objects.equals(name, project.name);
+                Objects.equals(name, project.name) &&
+                Objects.equals(code, project.code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, extracolsname, extracolstype, name);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "id", nullable = false)
-    public User getUserByUserid() {
-        return userByUserid;
-    }
-
-    public void setUserByUserid(User userByUserid) {
-        this.userByUserid = userByUserid;
-    }
-
-    @OneToMany(mappedBy = "projectByProjectid")
-    public Collection<Projectresourcedetail> getProjectresourcedetailsById() {
-        return projectresourcedetailsById;
-    }
-
-    public void setProjectresourcedetailsById(Collection<Projectresourcedetail> projectresourcedetailsById) {
-        this.projectresourcedetailsById = projectresourcedetailsById;
+        return Objects.hash(id, extracolsname, extracolstype, name, code);
     }
 }
