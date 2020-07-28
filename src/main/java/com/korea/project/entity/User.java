@@ -1,14 +1,14 @@
 package com.korea.project.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstname;
     private Timestamp joindate;
@@ -17,8 +17,6 @@ public class User {
     private Integer role;
     private String username;
 
-    @Id
-    @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
     }
@@ -57,7 +55,8 @@ public class User {
         this.lastname = lastname;
     }
 
-    @Column(name = "password", nullable = false)
+    @Basic
+    @Column(name = "password", nullable = false, length = 255)
     public String getPassword() {
         return password;
     }

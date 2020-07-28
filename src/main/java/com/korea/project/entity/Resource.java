@@ -1,18 +1,18 @@
 package com.korea.project.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class Resource {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String code;
     private String name;
+    private Integer catalogId;
 
-    @Id
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -55,5 +55,15 @@ public class Resource {
     @Override
     public int hashCode() {
         return Objects.hash(id, code, name);
+    }
+
+    @Basic
+    @Column(name = "catalog_id", nullable = true)
+    public Integer getCatalogId() {
+        return catalogId;
+    }
+
+    public void setCatalogId(Integer catalogId) {
+        this.catalogId = catalogId;
     }
 }

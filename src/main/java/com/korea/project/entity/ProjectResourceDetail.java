@@ -1,21 +1,23 @@
 package com.korea.project.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Projectresourcedetail {
+@Table(name = "project_resource_detail", schema = "korea", catalog = "")
+public class ProjectResourceDetail {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Byte editable;
     private String extracolsvalue;
     private String itemid;
     private Integer price;
     private Integer quantity;
+    private Integer projectid;
+    private Integer resourceid;
 
-    @Id
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -79,7 +81,7 @@ public class Projectresourcedetail {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Projectresourcedetail that = (Projectresourcedetail) o;
+        ProjectResourceDetail that = (ProjectResourceDetail) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(editable, that.editable) &&
                 Objects.equals(extracolsvalue, that.extracolsvalue) &&
@@ -91,5 +93,26 @@ public class Projectresourcedetail {
     @Override
     public int hashCode() {
         return Objects.hash(id, editable, extracolsvalue, itemid, price, quantity);
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "projectid", referencedColumnName = "id", nullable = false)
+    public Integer getProjectid() {
+        return projectid;
+    }
+
+    public void setProjectid(Integer projectid) {
+        this.projectid = projectid;
+    }
+
+    @Basic
+    @Column(name = "resourceid", nullable = false)
+    public Integer getResourceid() {
+        return resourceid;
+    }
+
+    public void setResourceid(Integer resourceid) {
+        this.resourceid = resourceid;
     }
 }

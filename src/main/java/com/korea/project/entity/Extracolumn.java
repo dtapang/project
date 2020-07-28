@@ -4,15 +4,14 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Project {
+public class Extracolumn {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String code;
-    private Integer owner;
-
+    private String type;
+    private Integer projectid;
 
     @Column(name = "id", nullable = false)
     public Integer getId() {
@@ -34,37 +33,37 @@ public class Project {
     }
 
     @Basic
-    @Column(name = "code", nullable = false, length = 50)
-    public String getCode() {
-        return code;
+    @Column(name = "type", nullable = false, length = 50)
+    public String getType() {
+        return type;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Project project = (Project) o;
-        return Objects.equals(id, project.id) &&
-                Objects.equals(name, project.name) &&
-                Objects.equals(code, project.code);
+        Extracolumn that = (Extracolumn) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(type, that.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, code);
+        return Objects.hash(id, name, type);
     }
 
     @Basic
-    @Column(name = "owner", nullable = false)
-    public Integer getOwner() {
-        return owner;
+    @Column(name = "projectid", nullable = false)
+    public Integer getProjectid() {
+        return projectid;
     }
 
-    public void setOwner(Integer owner) {
-        this.owner = owner;
+    public void setProjectid(Integer projectid) {
+        this.projectid = projectid;
     }
 }
