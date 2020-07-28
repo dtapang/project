@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import javax.xml.soap.SOAPPart;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,61 +23,56 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> readAll() {
+    public List<Project> get() {
         return projectRepository.findAll();
     }
 
     @Override
-    public List<Project> readByName(String name) {
-        throw new NotImplementedException();
+    public List<Project> get(String name) {
+        return projectRepository.findAllByName(name);
     }
 
     @Override
-    public Project readOneById(int id) {
+    public Project get(int id) {
         return projectRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Project update(int id, String name) {
+    @Transactional
+    public Project updateName(int id, String name) {
         Optional<Project> optional = projectRepository.findById(id);
         if (optional.isPresent()) {
             Project project1 = optional.get();
             project1.setName(name);
             return projectRepository.save(project1);
         }
-
         return null;
     }
 
     @Override
+    @Transactional
     public boolean delete(int id) {
         if(projectRepository.existsById(id)){
             projectRepository.deleteById(id);
+            System.out.println();
             return true;
         }else {
             return false;
         }
     }
 
-    @Transactional
     @Override
-    public boolean addExtraColumn(int id, String colName, String colType) {
-
+    @Transactional
+    public void updateCode(Integer id, String code) {
         Optional<Project> optional = projectRepository.findById(id);
-        if (!optional.isPresent()) return false;
-        Project project = optional.get();
-
-        boolean extraColExists = (project.getExtracolsname() != null);
-        if (extraColExists){
-            project.setExtracolsname(project.getExtracolsname() + "," + colName);
-            project.setExtracolstype(project.getExtracolstype() + "," + colType);
-        }else{
-            project.setExtracolsname(colName);
-            project.setExtracolstype(colType);
+        if (optional.isPresent()) {
+            Project project1 = optional.get();
+            project1.setCode(code);
+            projectRepository.save(project1);
         }
-        return (projectRepository.save(project)==null)?false:true;
-
     }
+
+
 }
 
 

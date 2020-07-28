@@ -7,11 +7,11 @@ import java.util.List;
 public interface ProjectService {
 
     boolean create(Project project);
-    List<Project> readAll();
-    List<Project> readByName(String name);
-    Project readOneById(int id);
-    Project update(int id, String name);
+    List<Project> get();
+    List<Project> get(String name);
+    Project get(int id);
+    Project updateName(int id, String name);
     boolean delete(int id);
-    boolean addExtraColumn(int id, String colName, String colType);
 
+    void updateCode(Integer id, String code);
 }

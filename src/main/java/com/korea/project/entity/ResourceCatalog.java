@@ -4,15 +4,14 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Project {
+@Table(name = "resource_catalog", schema = "korea", catalog = "")
+public class ResourceCatalog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
+    private String category;
     private String code;
-    private Integer owner;
-
 
     @Column(name = "id", nullable = false)
     public Integer getId() {
@@ -24,13 +23,13 @@ public class Project {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = 50)
-    public String getName() {
-        return name;
+    @Column(name = "category", nullable = false, length = 50)
+    public String getCategory() {
+        return category;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Basic
@@ -47,24 +46,14 @@ public class Project {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Project project = (Project) o;
-        return Objects.equals(id, project.id) &&
-                Objects.equals(name, project.name) &&
-                Objects.equals(code, project.code);
+        ResourceCatalog that = (ResourceCatalog) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(category, that.category) &&
+                Objects.equals(code, that.code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, code);
-    }
-
-    @Basic
-    @Column(name = "owner", nullable = false)
-    public Integer getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Integer owner) {
-        this.owner = owner;
+        return Objects.hash(id, category, code);
     }
 }

@@ -1,14 +1,14 @@
 package com.korea.project.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstname;
     private Timestamp joindate;
@@ -17,8 +17,6 @@ public class User {
     private Integer role;
     private String username;
 
-    @Id
-    @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
     }

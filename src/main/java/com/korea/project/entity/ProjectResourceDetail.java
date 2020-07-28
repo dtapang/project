@@ -4,41 +4,20 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "project_resource_detail", schema = "korea", catalog = "")
 public class ProjectResourceDetail {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Byte editable;
     private String extracolsvalue;
     private String itemid;
     private Integer price;
     private Integer quantity;
-/*
-    @ManyToOne
-    @JoinColumn(name = "projectid")
-    private Project projectByProjectId;
+    private Integer projectid;
+    private Integer resourceid;
 
-    public Project getProjectByProjectId() {
-        return projectByProjectId;
-    }
-
-    public void setProjectByProjectId(Project projectByProjectId) {
-        this.projectByProjectId = projectByProjectId;
-    }
-
-    public Resource getResourceByResourceId() {
-        return resourceByResourceId;
-    }
-
-    public void setResourceByResourceId(Resource resourceByResourceId) {
-        this.resourceByResourceId = resourceByResourceId;
-    }
-
-    @OneToOne
-    @JoinColumn(name="resourceid")
-    private Resource resourceByResourceId;
-
-*/
-
-    @Id
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -114,5 +93,26 @@ public class ProjectResourceDetail {
     @Override
     public int hashCode() {
         return Objects.hash(id, editable, extracolsvalue, itemid, price, quantity);
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "projectid", referencedColumnName = "id", nullable = false)
+    public Integer getProjectid() {
+        return projectid;
+    }
+
+    public void setProjectid(Integer projectid) {
+        this.projectid = projectid;
+    }
+
+    @Basic
+    @Column(name = "resourceid", nullable = false)
+    public Integer getResourceid() {
+        return resourceid;
+    }
+
+    public void setResourceid(Integer resourceid) {
+        this.resourceid = resourceid;
     }
 }

@@ -19,23 +19,30 @@ public class ProjectController {
 
     @PostMapping("/project/create")
     public ResponseEntity<?>  create(@RequestBody Project project) {
+
         service.create(project);
         return ResponseEntity.ok("Success");
     }
 
     @GetMapping("/project/list")
     public List<Project> list() {
-        return service.readAll();
+        return service.get();
     }
 
     @GetMapping("/project/find/{id}")
     public Project findById(@PathVariable("id") Integer id) {
-        return service.readOneById(id);
+        return service.get(id);
     }
 
-    @PutMapping("/project/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody String name) {
-        service.update(id,name);
+    @PutMapping("/project/update/name/{id}/{name}")
+    public ResponseEntity<?> updateName(@PathVariable("id") Integer id, @PathVariable String name) {
+        service.updateName(id,name);
+        return ResponseEntity.ok("Success");
+    }
+
+    @PutMapping("/project/update/code/{id}/{code}")
+    public ResponseEntity<?> updateCode(@PathVariable("id") Integer id, @PathVariable String code) {
+        service.updateCode(id,code);
         return ResponseEntity.ok("Success");
     }
 
