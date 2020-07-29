@@ -21,14 +21,14 @@ public class ProjectResourceDetailController {
         return ResponseEntity.ok("Success");
     }
 
-    @GetMapping("/prd/list")
-    public List<ProjectResourceDetail> list() {
-        return projectResourceDetailService.readAll();
+    @GetMapping("/prd/listByProject/{id}")
+    public List<ProjectResourceDetail> list(@PathVariable("id") Integer projectId) {
+        return projectResourceDetailService.getAllResourcesByProjectId(projectId);
     }
 
-    @GetMapping("/prd/find/{id}")
+    @GetMapping("/prd/findById/{id}")
     public ProjectResourceDetail findById(@PathVariable("id") Integer id) {
-        return projectResourceDetailService.readOneById(id);
+        return projectResourceDetailService.getResourceDetailById(id);
     }
 
     @PutMapping("/prd/update/{id}")

@@ -6,9 +6,7 @@ import com.korea.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.xml.soap.SOAPPart;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +36,16 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<Project> searchByName(String name) {
+        return projectRepository.findAllByNameContaining(name);
+    }
+
+    @Override
+    public List<Project> searchByCode(String code) {
+        return projectRepository.findAllByCodeContaining(code);
+    }
+
+    @Override
     @Transactional
     public Project updateName(int id, String name) {
         Optional<Project> optional = projectRepository.findById(id);
@@ -54,7 +62,6 @@ public class ProjectServiceImpl implements ProjectService {
     public boolean delete(int id) {
         if(projectRepository.existsById(id)){
             projectRepository.deleteById(id);
-            System.out.println();
             return true;
         }else {
             return false;
