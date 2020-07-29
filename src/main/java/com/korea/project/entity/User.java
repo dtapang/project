@@ -1,21 +1,14 @@
 package com.korea.project.entity;
 
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name="user")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstname;
     private Timestamp joindate;
@@ -23,11 +16,7 @@ public class User {
     private String password;
     private Integer role;
     private String username;
-    private Collection<Project> projectsById;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
     }
@@ -36,7 +25,7 @@ public class User {
         this.id = id;
     }
 
-
+    @Basic
     @Column(name = "firstname", nullable = false, length = 50)
     public String getFirstname() {
         return firstname;
@@ -46,7 +35,7 @@ public class User {
         this.firstname = firstname;
     }
 
-
+    @Basic
     @Column(name = "joindate", nullable = false)
     public Timestamp getJoindate() {
         return joindate;
@@ -56,7 +45,7 @@ public class User {
         this.joindate = joindate;
     }
 
-
+    @Basic
     @Column(name = "lastname", nullable = false, length = 50)
     public String getLastname() {
         return lastname;
@@ -66,8 +55,8 @@ public class User {
         this.lastname = lastname;
     }
 
-
-    @Column(name = "password", nullable = false)
+    @Basic
+    @Column(name = "password", nullable = false, length = 255)
     public String getPassword() {
         return password;
     }
@@ -76,7 +65,7 @@ public class User {
         this.password = password;
     }
 
-
+    @Basic
     @Column(name = "role", nullable = true)
     public Integer getRole() {
         return role;
@@ -86,7 +75,7 @@ public class User {
         this.role = role;
     }
 
-
+    @Basic
     @Column(name = "username", nullable = false, length = 50)
     public String getUsername() {
         return username;
@@ -113,14 +102,5 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstname, joindate, lastname, password, role, username);
-    }
-
-    @OneToMany(mappedBy = "userByUserid")
-    public Collection<Project> getProjectsById() {
-        return projectsById;
-    }
-
-    public void setProjectsById(Collection<Project> projectsById) {
-        this.projectsById = projectsById;
     }
 }

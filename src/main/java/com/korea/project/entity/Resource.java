@@ -1,29 +1,18 @@
 package com.korea.project.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import java.util.Collection;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name="project")
 public class Resource {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String code;
     private String name;
-    private Collection<Projectresourcedetail> projectresourcedetailsById;
-    private Resource resourceByParentid;
-    private Collection<Resource> resourcesById;
+    private Integer catalogId;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -33,6 +22,7 @@ public class Resource {
         this.id = id;
     }
 
+    @Basic
     @Column(name = "code", nullable = false, length = 45)
     public String getCode() {
         return code;
@@ -42,6 +32,7 @@ public class Resource {
         this.code = code;
     }
 
+    @Basic
     @Column(name = "name", nullable = false, length = 45)
     public String getName() {
         return name;
@@ -66,31 +57,13 @@ public class Resource {
         return Objects.hash(id, code, name);
     }
 
-    @OneToMany(mappedBy = "resourceByResourceid")
-    public Collection<Projectresourcedetail> getProjectresourcedetailsById() {
-        return projectresourcedetailsById;
+    @Basic
+    @Column(name = "catalog_id", nullable = true)
+    public Integer getCatalogId() {
+        return catalogId;
     }
 
-    public void setProjectresourcedetailsById(Collection<Projectresourcedetail> projectresourcedetailsById) {
-        this.projectresourcedetailsById = projectresourcedetailsById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "parentid", referencedColumnName = "id")
-    public Resource getResourceByParentid() {
-        return resourceByParentid;
-    }
-
-    public void setResourceByParentid(Resource resourceByParentid) {
-        this.resourceByParentid = resourceByParentid;
-    }
-
-    @OneToMany(mappedBy = "resourceByParentid")
-    public Collection<Resource> getResourcesById() {
-        return resourcesById;
-    }
-
-    public void setResourcesById(Collection<Resource> resourcesById) {
-        this.resourcesById = resourcesById;
+    public void setCatalogId(Integer catalogId) {
+        this.catalogId = catalogId;
     }
 }
