@@ -1,8 +1,14 @@
 package com.korea.project.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -16,7 +22,23 @@ public class User {
     private String password;
     private Integer role;
     private String username;
+    //private Project userProjects;
+    /*
+    @OneToMany(targetEntity = Project.class, cascade = CascadeType.REMOVE, mappedBy = "owner")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Project> projects = new HashSet<>();
 
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
+*/
+    @Id
+    @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
     }
@@ -103,4 +125,16 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, firstname, joindate, lastname, password, role, username);
     }
+
+    /*
+    @ManyToOne
+    @JoinColumn(name = "username", referencedColumnName = "owner", nullable = false)
+    public Project getUserProjects() {
+        return userProjects;
+    }
+
+    public void setUserProjects(Project userProjects) {
+        this.userProjects = userProjects;
+    }
+    */
 }
