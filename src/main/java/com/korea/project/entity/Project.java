@@ -11,9 +11,19 @@ public class Project {
     private Integer id;
     private String name;
     private String code;
-    private Integer owner;
+    private String owner;
 
+    @Basic
+    @Column(name = "owner", nullable = false, length = 50)
+    public String getOwner() {
+        return owner;
+    }
 
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    @Id
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -58,13 +68,5 @@ public class Project {
         return Objects.hash(id, name, code);
     }
 
-    @Basic
-    @Column(name = "owner", nullable = false)
-    public Integer getOwner() {
-        return owner;
-    }
 
-    public void setOwner(Integer owner) {
-        this.owner = owner;
-    }
 }
