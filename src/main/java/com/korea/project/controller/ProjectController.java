@@ -2,86 +2,83 @@ package com.korea.project.controller;
 
 import com.korea.project.entity.Project;
 import com.korea.project.entity.User;
-import com.korea.project.repository.UserRepository;
 import com.korea.project.service.impl.DAOUserDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.korea.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.security.Principal;
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
+@RequestMapping("/project")
 public class ProjectController {
 
     @Autowired
-    private ProjectService service;
+    private ProjectService projectService;
 
     @Autowired
     private DAOUserDetailsService userService;
 
-    @PostMapping("/project/create")
+    @PostMapping("/create")
     public ResponseEntity<?>  create(@RequestBody Project project) {
-        service.create(project);
-        return ResponseEntity.ok("Success");
+        if(projectService.create(project))
+            return ResponseEntity.ok("New Project Created Successfully");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("New project could not be created");
     }
 
-
-    @GetMapping("/project/getAllProjects")
+    @GetMapping("/all")
     public ResponseEntity<?> getAllProjects(Principal principal){
         User user = getCurrentUser(principal);
-        List<Project> projectList = service.getUserProjects(user);
-        return new ResponseEntity<>(projectList, HttpStatus.OK);
+        if(user==null)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("user does not exist!");
+        Set<Project> projects = projectService.getUserProjects(user);
+        if(projects==null)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("user has no projects!");
+        return new ResponseEntity<>(projects, HttpStatus.OK);
     }
-
 
     private User getCurrentUser(Principal principal){
         return userService.getCurrentUser(principal);
     }
 
-
-    @GetMapping("/project/list")
+    @GetMapping("/find")
     public ResponseEntity<?> findByProjectId(Principal principal, @RequestParam( name="projectId") Integer projectId){
         User user = userService.getCurrentUser(principal);
-        Project project = service.get(projectId);
+        Optional<Project> project = projectService.getByProjectId(projectId);
         if(user==null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        if(project==null)
+        if(!project.isPresent())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        if(!user.getUsername().equals(project.getOwner().getUsername()))
+        if(!user.getUsername().equals(project.get().getOwner().getUsername()))
             return new ResponseEntity<>("Project does not belong to the user", HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(project,HttpStatus.OK);
     }
 
-    @PutMapping("/project/update/name/{id}/{name}")
-    public ResponseEntity<?> updateName(@PathVariable("id") Integer id, @PathVariable String name) {
-        service.updateName(id,name);
-        return ResponseEntity.ok("Success");
+
+    @GetMapping("/search")
+    public  ResponseEntity<?> search(@RequestParam(name="query") String query){
+        return new ResponseEntity<>(projectService.searchByNameOrCode(query),HttpStatus.OK);
+    }
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestParam(name="project") Project project ) {
+        boolean updateSucceded = projectService.update(project.getId(),project.getName(),project.getCode());
+        if(updateSucceded)
+            return ResponseEntity.ok("Project updated successfully");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Project update failed!");
     }
 
-    @PutMapping("/project/update/code/{id}/{code}")
-    public ResponseEntity<?> updateCode(@PathVariable("id") Integer id, @PathVariable String code) {
-        service.updateCode(id,code);
-        return ResponseEntity.ok("Success");
-    }
-
-    @DeleteMapping(value = "/project/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable ("id") Integer id) {
-        boolean isRemoved = service.delete(id);
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<?> delete(@RequestBody Project project) {
+        boolean isRemoved = projectService.delete(project);
         if (!isRemoved)
-            return ResponseEntity.ok("Failed");
-        return ResponseEntity.ok("Success");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("New project could not be created");
+        return ResponseEntity.ok("Project Deleted Successfully");
     }
-
-
-
 }
 
 

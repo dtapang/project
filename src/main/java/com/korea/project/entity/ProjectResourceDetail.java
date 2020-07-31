@@ -15,8 +15,30 @@ public class ProjectResourceDetail {
     private String itemid;
     private Integer price;
     private Integer quantity;
-    private Integer projectid;
-    private Integer resourceid;
+
+    @ManyToOne(targetEntity = Project.class)
+    @JoinColumn(name="projectid", referencedColumnName = "id", insertable=false, updatable=false)
+    private Project project;
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    @ManyToOne(targetEntity = Resource.class)
+    @JoinColumn(name = "resourceid" , referencedColumnName = "id", insertable=false, updatable=false)
+    private Resource resource;
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
+    }
 
     @Column(name = "id", nullable = false)
     public Integer getId() {
@@ -27,7 +49,6 @@ public class ProjectResourceDetail {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "editable", nullable = false)
     public Byte getEditable() {
         return editable;
@@ -37,7 +58,6 @@ public class ProjectResourceDetail {
         this.editable = editable;
     }
 
-    @Basic
     @Column(name = "extracolsvalue", nullable = true, length = 1000)
     public String getExtracolsvalue() {
         return extracolsvalue;
@@ -47,7 +67,6 @@ public class ProjectResourceDetail {
         this.extracolsvalue = extracolsvalue;
     }
 
-    @Basic
     @Column(name = "itemid", nullable = true, length = 50)
     public String getItemid() {
         return itemid;
@@ -57,7 +76,6 @@ public class ProjectResourceDetail {
         this.itemid = itemid;
     }
 
-    @Basic
     @Column(name = "price", nullable = true)
     public Integer getPrice() {
         return price;
@@ -67,7 +85,6 @@ public class ProjectResourceDetail {
         this.price = price;
     }
 
-    @Basic
     @Column(name = "quantity", nullable = true)
     public Integer getQuantity() {
         return quantity;
@@ -95,24 +112,4 @@ public class ProjectResourceDetail {
         return Objects.hash(id, editable, extracolsvalue, itemid, price, quantity);
     }
 
-
-    @ManyToOne
-    @JoinColumn(name = "projectid", referencedColumnName = "id", nullable = false)
-    public Integer getProjectid() {
-        return projectid;
-    }
-
-    public void setProjectid(Integer projectid) {
-        this.projectid = projectid;
-    }
-
-    @Basic
-    @Column(name = "resourceid", nullable = false)
-    public Integer getResourceid() {
-        return resourceid;
-    }
-
-    public void setResourceid(Integer resourceid) {
-        this.resourceid = resourceid;
-    }
 }

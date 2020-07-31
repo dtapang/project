@@ -24,18 +24,19 @@ public class ProjectResourceDetailServiceImpl implements ProjectResourceDetailSe
     }
 
     @Override
-    public List<Resource> getAllResources(Integer projectId) {
-        return projectResourceDetailRepository.getResourcesByProjectid(projectId);
+    public List<Resource> getAllResources(Project project) {
+
+        return projectResourceDetailRepository.getResourcesByProject(project);
     }
 
     @Override
-    public List<ProjectResourceDetail> getAllResourcesByProjectId(Integer projectId) {
-        return projectResourceDetailRepository.getProjectResourceDetailsByProjectid(projectId);
+    public List<ProjectResourceDetail> getAllResourcesByProject(Project project) {
+        return projectResourceDetailRepository.getProjectResourceDetailsByProject(project);
     }
 
     @Override
-    public ProjectResourceDetail getResourceDetailById(Integer id) {
-        return projectResourceDetailRepository.getOne(id);
+    public ProjectResourceDetail getResourceDetailByProject(Project project) {
+        return projectResourceDetailRepository.getOne(project.getId());
     }
 
     @Override
@@ -49,8 +50,8 @@ public class ProjectResourceDetailServiceImpl implements ProjectResourceDetailSe
             prd.setItemid(projectResourceDetail.getItemid());
             prd.setPrice(projectResourceDetail.getPrice());
             prd.setQuantity(projectResourceDetail.getQuantity());
-            prd.setResourceid(projectResourceDetail.getResourceid());
-            prd.setProjectid(projectResourceDetail.getProjectid());
+            prd.setResource(projectResourceDetail.getResource());
+            prd.setProject(projectResourceDetail.getProject());
             return projectResourceDetailRepository.save(prd);
         }
         return null;

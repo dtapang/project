@@ -1,12 +1,12 @@
 package com.korea.project.controller;
 
 
+import com.korea.project.entity.Project;
 import com.korea.project.entity.ProjectResourceDetail;
 import com.korea.project.service.ProjectResourceDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -21,14 +21,14 @@ public class ProjectResourceDetailController {
         return ResponseEntity.ok("Success");
     }
 
-    @GetMapping("/prd/listByProject/{id}")
-    public List<ProjectResourceDetail> list(@PathVariable("id") Integer projectId) {
-        return projectResourceDetailService.getAllResourcesByProjectId(projectId);
+    @GetMapping("/prd/listByProject")
+    public List<ProjectResourceDetail> list(@RequestParam("project") Project project) {
+        return projectResourceDetailService.getAllResourcesByProject(project);
     }
 
-    @GetMapping("/prd/findById/{id}")
-    public ProjectResourceDetail findById(@PathVariable("id") Integer id) {
-        return projectResourceDetailService.getResourceDetailById(id);
+    @GetMapping("/prd/find")
+    public ProjectResourceDetail findById(@RequestParam("project") Project project) {
+        return projectResourceDetailService.getResourceDetailByProject(project);
     }
 
     @PutMapping("/prd/update/{id}")
