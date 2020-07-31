@@ -1,7 +1,9 @@
 package com.korea.project.service.impl;
 
 import com.korea.project.entity.Project;
+import com.korea.project.entity.User;
 import com.korea.project.repository.ProjectRepository;
+import com.korea.project.repository.UserRepository;
 import com.korea.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project get(int id) {
         return projectRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Project> getUserProjects(String username) {
+        return projectRepository.findAllByOwner(username);
     }
 
     @Override
