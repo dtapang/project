@@ -1,4 +1,4 @@
-package com.mall.project;
+package com.korea.project.service.impl;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
