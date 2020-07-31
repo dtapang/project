@@ -56,8 +56,13 @@ public class AuthenticationControllerImpl {
         user.setFirstname(signupRequest.getFirstName());
         user.setLastname(signupRequest.getLastName());
         user.setJoindate(new Timestamp(System.currentTimeMillis()));
+        if(signupRequest.getRole()==1) {
+            user.setRole(1);
+        } else {
+            user.setRole(0);
+        }
         user.setId((new Random()).nextInt());
         userRepository.save(user);
-        return ResponseEntity.ok("a-ok");
+        return ResponseEntity.ok("User successfully created");
     }
 }
