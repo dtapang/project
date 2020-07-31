@@ -5,40 +5,51 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
+
+    @Column(name = "firstname", nullable = false, length = 50)
     private String firstname;
+
+    @Column(name = "joindate", nullable = false)
     private Timestamp joindate;
+
+    @Column(name = "lastname", nullable = false, length = 50)
     private String lastname;
+
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
+
+    @Column(name = "role", nullable = true)
     private Integer role;
+
+    @Column(name = "username", nullable = false, length = 50)
     private String username;
+
     //private Project userProjects;
-    /*
+    /**/
     @OneToMany(targetEntity = Project.class, cascade = CascadeType.REMOVE, mappedBy = "owner")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Project> projects = new HashSet<>();
+    @LazyCollection(LazyCollectionOption.TRUE)
+    private List<Project> projects = new ArrayList<>();
 
 
-    public Set<Project> getProjects() {
+    public List<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<Project> projects) {
+    public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
-*/
-    @Id
-    @Column(name = "id", nullable = false)
+
+
+
     public Integer getId() {
         return id;
     }
@@ -47,8 +58,8 @@ public class User {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "firstname", nullable = false, length = 50)
+
+
     public String getFirstname() {
         return firstname;
     }
@@ -57,8 +68,8 @@ public class User {
         this.firstname = firstname;
     }
 
-    @Basic
-    @Column(name = "joindate", nullable = false)
+
+
     public Timestamp getJoindate() {
         return joindate;
     }
@@ -67,8 +78,8 @@ public class User {
         this.joindate = joindate;
     }
 
-    @Basic
-    @Column(name = "lastname", nullable = false, length = 50)
+
+
     public String getLastname() {
         return lastname;
     }
@@ -77,8 +88,8 @@ public class User {
         this.lastname = lastname;
     }
 
-    @Basic
-    @Column(name = "password", nullable = false, length = 255)
+
+
     public String getPassword() {
         return password;
     }
@@ -87,8 +98,7 @@ public class User {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "role", nullable = true)
+
     public Integer getRole() {
         return role;
     }
@@ -97,8 +107,7 @@ public class User {
         this.role = role;
     }
 
-    @Basic
-    @Column(name = "username", nullable = false, length = 50)
+
     public String getUsername() {
         return username;
     }
@@ -126,7 +135,7 @@ public class User {
         return Objects.hash(id, firstname, joindate, lastname, password, role, username);
     }
 
-    /*
+ /*
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "owner", nullable = false)
     public Project getUserProjects() {
@@ -136,5 +145,5 @@ public class User {
     public void setUserProjects(Project userProjects) {
         this.userProjects = userProjects;
     }
-    */
+       */
 }
