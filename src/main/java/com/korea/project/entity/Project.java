@@ -8,23 +8,33 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
-    private String name;
-    private String code;
-    private String owner;
 
-    @Basic
-    @Column(name = "owner", nullable = false, length = 50)
-    public String getOwner() {
+    @Column(name = "name", nullable = false, length = 50)
+    private String name;
+
+    @Column(name = "code", nullable = false, length = 50)
+    private String code;
+    //private String owner;
+
+    //TODO: Make user id the foreign key
+
+    @ManyToOne(targetEntity = User.class)
+    private User owner;
+
+
+    //@Column(name = "owner", nullable = false, length = 50)
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
-    @Id
-    @Column(name = "id", nullable = false)
+
+
     public Integer getId() {
         return id;
     }
@@ -33,8 +43,8 @@ public class Project {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = false, length = 50)
+
+
     public String getName() {
         return name;
     }
@@ -43,8 +53,8 @@ public class Project {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "code", nullable = false, length = 50)
+
+
     public String getCode() {
         return code;
     }

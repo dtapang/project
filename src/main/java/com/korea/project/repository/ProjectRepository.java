@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
-    List<Project> findAllByOwner(String owner);
+    List<Project> findAllByOwner(User owner);
     List<Project> findAllByNameContaining(String search);
     List<Project> findAllByCodeContaining(String search);
     List<Project> findAllByName(String name);

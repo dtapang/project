@@ -38,8 +38,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getUserProjects(String username) {
-        return projectRepository.findAllByOwner(username);
+    public List<Project> getUserProjects(User user) {
+        return projectRepository.findAllByOwner(user);
     }
 
     @Override
