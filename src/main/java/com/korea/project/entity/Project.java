@@ -1,10 +1,13 @@
 package com.korea.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "project", schema = "korea", catalog = "")
+@Table(name = "project", schema = "korea")
 public class Project {
 
     @Id
@@ -19,6 +22,7 @@ public class Project {
     private String code;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("projects")
     @JoinColumn(name="owner", nullable = false, referencedColumnName = "id", insertable=false, updatable=false)
     private User owner;
 

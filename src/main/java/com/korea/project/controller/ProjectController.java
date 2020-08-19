@@ -14,8 +14,8 @@ import java.security.Principal;
 import java.util.Optional;
 import java.util.Set;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/project")
 public class ProjectController {
 
     @Autowired
@@ -24,30 +24,38 @@ public class ProjectController {
     @Autowired
     private DAOUserDetailsService userService;
 
-    @PostMapping("/create")
+    @PostMapping("/projects")
     public ResponseEntity<?>  create(@RequestBody Project project) {
         if(projectService.create(project))
             return ResponseEntity.ok("New Project Created Successfully");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("New project could not be created");
     }
 
-    @GetMapping("/all")
+    @GetMapping("/projects")
     public ResponseEntity<?> getAllProjects(Principal principal){
-        User user = getCurrentUser(principal);
-        if(user==null)
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("user does not exist!");
-        Set<Project> projects = projectService.getUserProjects(user);
-        if(projects==null)
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("user has no projects!");
-        return new ResponseEntity<>(projects, HttpStatus.OK);
+        try{
+            User user = getCurrentUser(principal);
+            if(user==null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user does not exist!");
+            Set<Project> projects = projectService.getUserProjects(user);
+            if(projects==null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user has no projects!");
+            return new ResponseEntity<>(projects, HttpStatus.OK);
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving projects: "+ exception.getMessage());
+        }
+
     }
 
     private User getCurrentUser(Principal principal){
         return userService.getCurrentUser(principal);
     }
 
-    @GetMapping("/find")
-    public ResponseEntity<?> findByProjectId(Principal principal, @RequestParam( name="projectId") Integer projectId){
+    @GetMapping("/projects/{projectId}")
+    public ResponseEntity<?> findByProjectId(Principal principal,  @PathVariable int projectId){
+        //@RequestParam(name = "projectId") Integer projectId,
         User user = userService.getCurrentUser(principal);
         Optional<Project> project = projectService.getByProjectId(projectId);
         if(user==null)
@@ -59,12 +67,12 @@ public class ProjectController {
         return new ResponseEntity<>(project,HttpStatus.OK);
     }
 
-
-    @GetMapping("/search")
+    @GetMapping("/projects/search")
     public  ResponseEntity<?> search(@RequestParam(name="query") String query){
         return new ResponseEntity<>(projectService.searchByNameOrCode(query),HttpStatus.OK);
     }
-    @PutMapping("/update")
+
+    @PutMapping("/projects")
     public ResponseEntity<?> update(@RequestParam(name="project") Project project ) {
         boolean updateSucceded = projectService.update(project.getId(),project.getName(),project.getCode());
         if(updateSucceded)
@@ -72,7 +80,7 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Project update failed!");
     }
 
-    @DeleteMapping(value = "/delete")
+    @DeleteMapping("/projects")
     public ResponseEntity<?> delete(@RequestBody Project project) {
         boolean isRemoved = projectService.delete(project);
         if (!isRemoved)
