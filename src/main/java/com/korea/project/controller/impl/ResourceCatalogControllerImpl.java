@@ -7,9 +7,9 @@ import com.korea.project.service.ResourceCatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -27,6 +27,7 @@ public class ResourceCatalogControllerImpl {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("New Resource Catalog could not be created");
     }
 
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @DeleteMapping("/delete/{code}")
     public ResponseEntity<?> delete(@PathVariable String code) {
         if(resourceCatalogService.delete(code)) {
@@ -36,13 +37,17 @@ public class ResourceCatalogControllerImpl {
     }
 
     @GetMapping("/all")
-    public List<ResourceCatalogResponse> getAll() {
-        return resourceCatalogService.getAll();
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(resourceCatalogService.getAll());
     }
 
     @GetMapping("/find/{code}")
-    public ResourceCatalogResponse get(@PathVariable String code) {
-        return resourceCatalogService.get(code);
+    public ResponseEntity<?> get(@PathVariable String code) {
+        ResourceCatalogResponse res = resourceCatalogService.get(code);
+        if(res==null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource Catalog not found");
+        }
+        return ResponseEntity.ok(res);
     }
 
     @PutMapping("/update")
