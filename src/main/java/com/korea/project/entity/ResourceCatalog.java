@@ -22,7 +22,6 @@ public class ResourceCatalog {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "category", nullable = false, length = 50)
     public String getCategory() {
         return category;
@@ -32,7 +31,6 @@ public class ResourceCatalog {
         this.category = category;
     }
 
-    @Basic
     @Column(name = "code", nullable = false, length = 50)
     public String getCode() {
         return code;

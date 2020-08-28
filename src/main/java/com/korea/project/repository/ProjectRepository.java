@@ -4,16 +4,13 @@ import com.korea.project.entity.Project;
 import com.korea.project.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
+import java.util.Set;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
-    List<Project> findAllByOwner(User owner);
-    List<Project> findAllByNameContaining(String search);
-    List<Project> findAllByCodeContaining(String search);
-    List<Project> findAllByName(String name);
+    Set<Project> findAllByOwner(User owner);
+    Set<Project> findAllByNameContaining(String query);
+    Set<Project> findAllByCodeContaining(String query);
 }
 
 

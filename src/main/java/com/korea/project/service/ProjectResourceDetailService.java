@@ -1,5 +1,6 @@
 package com.korea.project.service;
 
+import com.korea.project.entity.Project;
 import com.korea.project.entity.ProjectResourceDetail;
 import com.korea.project.entity.Resource;
 import java.util.List;
@@ -7,9 +8,9 @@ import java.util.List;
 public interface ProjectResourceDetailService {
 
         boolean create(ProjectResourceDetail projectResourceDetail);
-        List<Resource> getAllResources(Integer projectId);
-        List<ProjectResourceDetail> getAllResourcesByProjectId(Integer projectId);
-        ProjectResourceDetail getResourceDetailById(Integer id);
+        List<Resource> getAllResources(int projectId);
+        List<ProjectResourceDetail> getAllResourcesByProject(int projectId);
+        ProjectResourceDetail getResourceDetailByProject(int projectId);
         ProjectResourceDetail update(Integer id, ProjectResourceDetail projectResourceDetail);
         boolean delete(Integer id);
 
