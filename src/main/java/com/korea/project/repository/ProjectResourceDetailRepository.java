@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ProjectResourceDetailRepository extends  JpaRepository<ProjectResourceDetail, Integer>{
-    List<ProjectResourceDetail> getProjectResourceDetailsByProject(Project project);
-    List<Resource> getResourcesByProject(Project project);
+    List<ProjectResourceDetail> getProjectResourceDetailsByProjectByProjectid(int projectId);
+    List<Resource> getResourcesByProjectByProjectid(int projectId);
+
 }

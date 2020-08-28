@@ -2,6 +2,7 @@ package com.korea.project.controller;
 
 import com.korea.project.entity.Project;
 import com.korea.project.entity.User;
+import com.korea.project.models.ProjectResponse;
 import com.korea.project.service.impl.DAOUserDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -38,9 +40,14 @@ public class ProjectController {
             if(user==null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user does not exist!");
             Set<Project> projects = projectService.getUserProjects(user);
+
+            Set<ProjectResponse> projectResponses = new HashSet<>();
+
+            projects.forEach((project)->projectResponses.add(new ProjectResponse(project.getId(), project.getName(), project.getCode())));
+
             if(projects==null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user has no projects!");
-            return new ResponseEntity<>(projects, HttpStatus.OK);
+            return new ResponseEntity<>(projectResponses, HttpStatus.OK);
 
         }catch (Exception exception){
             exception.printStackTrace();

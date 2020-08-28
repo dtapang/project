@@ -8,9 +8,9 @@ import java.util.List;
 public interface ProjectResourceDetailService {
 
         boolean create(ProjectResourceDetail projectResourceDetail);
-        List<Resource> getAllResources(Project project);
-        List<ProjectResourceDetail> getAllResourcesByProject(Project project);
-        ProjectResourceDetail getResourceDetailByProject(Project project);
+        List<Resource> getAllResources(int projectId);
+        List<ProjectResourceDetail> getAllResourcesByProject(int projectId);
+        ProjectResourceDetail getResourceDetailByProject(int projectId);
         ProjectResourceDetail update(Integer id, ProjectResourceDetail projectResourceDetail);
         boolean delete(Integer id);
 

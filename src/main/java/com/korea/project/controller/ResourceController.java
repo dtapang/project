@@ -1,5 +1,6 @@
 package com.korea.project.controller;
 
+import com.korea.project.models.ResourceRequest;
 import com.korea.project.repository.ResourceRepository;
 import com.korea.project.service.ResourceService;
 import com.korea.project.entity.Resource;
@@ -22,19 +23,19 @@ public class ResourceController {
     @Autowired
     private ResourceRepository repository;
 
-
-
     /**
      * create new resources
      * @return
      */
     @PostMapping("/resource/create")
-    public void create(@RequestParam("name") String name,
-                       @RequestParam("code") String code) {
+    public ResponseEntity<?> create(@RequestBody ResourceRequest resourceRequest) {
         Resource resource = new Resource();
-        resource.setName(name);
-        resource.setCode(code);
-        service.create(resource);
+        resource.setName(resourceRequest.getName());
+        resource.setCode(resourceRequest.getCode());
+
+        if(service.create(resource))
+            return ResponseEntity.ok("New Resource Created Successfully");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("New resource could not be created");
     }
 
 
@@ -44,7 +45,6 @@ public class ResourceController {
      */
     @GetMapping("/resource/list")
     public List<Resource> list() {
-
         return service.readAll();
     }
 
@@ -54,7 +54,6 @@ public class ResourceController {
      */
     @GetMapping("/resource/find/{code}")
     public Resource findById(@PathVariable("code") String code) {
-
         return service.readOneByCode(code);
     }
 
@@ -63,10 +62,8 @@ public class ResourceController {
      * @return
      */
     @PutMapping("/resource/update/{id}")
-    public Resource update(
-                           @RequestParam("name") String name,
+    public Resource update(@RequestParam("name") String name,
                            @RequestParam("code") String code)
-
     {
         return service.update(name,code);
     }

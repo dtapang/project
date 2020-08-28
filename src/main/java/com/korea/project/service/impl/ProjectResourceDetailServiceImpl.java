@@ -24,19 +24,19 @@ public class ProjectResourceDetailServiceImpl implements ProjectResourceDetailSe
     }
 
     @Override
-    public List<Resource> getAllResources(Project project) {
+    public List<Resource> getAllResources(int projectId) {
 
-        return projectResourceDetailRepository.getResourcesByProject(project);
+        return projectResourceDetailRepository.getResourcesByProjectByProjectid(projectId);
     }
 
     @Override
-    public List<ProjectResourceDetail> getAllResourcesByProject(Project project) {
-        return projectResourceDetailRepository.getProjectResourceDetailsByProject(project);
+    public List<ProjectResourceDetail> getAllResourcesByProject(int projectId) {
+        return projectResourceDetailRepository.getProjectResourceDetailsByProjectByProjectid(projectId);
     }
 
     @Override
-    public ProjectResourceDetail getResourceDetailByProject(Project project) {
-        return projectResourceDetailRepository.getOne(project.getId());
+    public ProjectResourceDetail getResourceDetailByProject(int projectId) {
+        return projectResourceDetailRepository.getOne(projectId);
     }
 
     @Override
@@ -45,13 +45,9 @@ public class ProjectResourceDetailServiceImpl implements ProjectResourceDetailSe
         Optional<ProjectResourceDetail> optional = projectResourceDetailRepository.findById(id);
         if (optional.isPresent()) {
             ProjectResourceDetail prd = optional.get();
-            prd.setEditable(projectResourceDetail.getEditable());
-            prd.setExtracolsvalue(projectResourceDetail.getExtracolsvalue());
-            prd.setItemid(projectResourceDetail.getItemid());
-            prd.setPrice(projectResourceDetail.getPrice());
-            prd.setQuantity(projectResourceDetail.getQuantity());
-            prd.setResource(projectResourceDetail.getResource());
-            prd.setProject(projectResourceDetail.getProject());
+            prd.setProjectid(projectResourceDetail.getProjectid());
+            prd.setResourceid(projectResourceDetail.getResourceid());
+
             return projectResourceDetailRepository.save(prd);
         }
         return null;

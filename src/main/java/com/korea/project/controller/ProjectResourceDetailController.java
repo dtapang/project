@@ -16,20 +16,20 @@ public class ProjectResourceDetailController {
     @Autowired
     private ProjectResourceDetailService projectResourceDetailService;
 
-    @PostMapping("/prd/create")
+    @PostMapping("/prd")
     public ResponseEntity<?> create(@RequestBody ProjectResourceDetail projectResourceDetail) {
         projectResourceDetailService.create(projectResourceDetail);
         return ResponseEntity.ok("Success");
     }
 
-    @GetMapping("/prd/listByProject")
-    public List<ProjectResourceDetail> list(@RequestParam("project") Project project) {
-        return projectResourceDetailService.getAllResourcesByProject(project);
+    @GetMapping("/prd/listByProject/{id}")
+    public List<ProjectResourceDetail> list(@PathVariable("id") Integer id) {
+        return projectResourceDetailService.getAllResourcesByProject(id);
     }
 
-    @GetMapping("/prd/find")
-    public ProjectResourceDetail findById(@RequestParam("project") Project project) {
-        return projectResourceDetailService.getResourceDetailByProject(project);
+    @GetMapping("/prd/find/{id}")
+    public ProjectResourceDetail findById(@PathVariable("id") Integer id) {
+        return projectResourceDetailService.getResourceDetailByProject(id);
     }
 
     @PutMapping("/prd/update/{id}")
