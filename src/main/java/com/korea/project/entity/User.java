@@ -1,7 +1,6 @@
 package com.korea.project.entity;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -33,12 +32,10 @@ public class User {
     @Column(name = "username", nullable = false, length = 50)
     private String username;
 
-    //private Project userProjects;
-    /**/
-    @OneToMany(targetEntity = Project.class, cascade = CascadeType.REMOVE, mappedBy = "owner")
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @OneToMany(targetEntity = Project.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("owner")
+    @JoinColumn(name="owner", referencedColumnName = "id", nullable = false , insertable=false, updatable=false)
     private List<Project> projects = new ArrayList<>();
-
 
     public List<Project> getProjects() {
         return projects;
@@ -48,8 +45,6 @@ public class User {
         this.projects = projects;
     }
 
-
-
     public Integer getId() {
         return id;
     }
@@ -57,8 +52,6 @@ public class User {
     public void setId(Integer id) {
         this.id = id;
     }
-
-
 
     public String getFirstname() {
         return firstname;
@@ -68,8 +61,6 @@ public class User {
         this.firstname = firstname;
     }
 
-
-
     public Timestamp getJoindate() {
         return joindate;
     }
@@ -77,8 +68,6 @@ public class User {
     public void setJoindate(Timestamp joindate) {
         this.joindate = joindate;
     }
-
-
 
     public String getLastname() {
         return lastname;
@@ -88,8 +77,6 @@ public class User {
         this.lastname = lastname;
     }
 
-
-
     public String getPassword() {
         return password;
     }
@@ -98,7 +85,6 @@ public class User {
         this.password = password;
     }
 
-
     public Integer getRole() {
         return role;
     }
@@ -106,7 +92,6 @@ public class User {
     public void setRole(Integer role) {
         this.role = role;
     }
-
 
     public String getUsername() {
         return username;
@@ -134,16 +119,4 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, firstname, joindate, lastname, password, role, username);
     }
-
- /*
-    @ManyToOne
-    @JoinColumn(name = "username", referencedColumnName = "owner", nullable = false)
-    public Project getUserProjects() {
-        return userProjects;
-    }
-
-    public void setUserProjects(Project userProjects) {
-        this.userProjects = userProjects;
-    }
-       */
 }

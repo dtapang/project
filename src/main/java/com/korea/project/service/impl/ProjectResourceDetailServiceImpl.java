@@ -24,18 +24,19 @@ public class ProjectResourceDetailServiceImpl implements ProjectResourceDetailSe
     }
 
     @Override
-    public List<Resource> getAllResources(Integer projectId) {
-        return projectResourceDetailRepository.getResourcesByProjectid(projectId);
+    public List<Resource> getAllResources(int projectId) {
+
+        return projectResourceDetailRepository.getResourcesByProjectByProjectid(projectId);
     }
 
     @Override
-    public List<ProjectResourceDetail> getAllResourcesByProjectId(Integer projectId) {
-        return projectResourceDetailRepository.getProjectResourceDetailsByProjectid(projectId);
+    public List<ProjectResourceDetail> getAllResourcesByProject(int projectId) {
+        return projectResourceDetailRepository.getProjectResourceDetailsByProjectByProjectid(projectId);
     }
 
     @Override
-    public ProjectResourceDetail getResourceDetailById(Integer id) {
-        return projectResourceDetailRepository.getOne(id);
+    public ProjectResourceDetail getResourceDetailByProject(int projectId) {
+        return projectResourceDetailRepository.getOne(projectId);
     }
 
     @Override
@@ -44,13 +45,9 @@ public class ProjectResourceDetailServiceImpl implements ProjectResourceDetailSe
         Optional<ProjectResourceDetail> optional = projectResourceDetailRepository.findById(id);
         if (optional.isPresent()) {
             ProjectResourceDetail prd = optional.get();
-            prd.setEditable(projectResourceDetail.getEditable());
-            prd.setExtracolsvalue(projectResourceDetail.getExtracolsvalue());
-            prd.setItemid(projectResourceDetail.getItemid());
-            prd.setPrice(projectResourceDetail.getPrice());
-            prd.setQuantity(projectResourceDetail.getQuantity());
-            prd.setResourceid(projectResourceDetail.getResourceid());
             prd.setProjectid(projectResourceDetail.getProjectid());
+            prd.setResourceid(projectResourceDetail.getResourceid());
+
             return projectResourceDetailRepository.save(prd);
         }
         return null;

@@ -1,34 +1,35 @@
 package com.korea.project.controller;
 
 
+import com.korea.project.entity.Project;
 import com.korea.project.entity.ProjectResourceDetail;
 import com.korea.project.service.ProjectResourceDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class ProjectResourceDetailController {
 
     @Autowired
     private ProjectResourceDetailService projectResourceDetailService;
 
-    @PostMapping("/prd/create")
+    @PostMapping("/prd")
     public ResponseEntity<?> create(@RequestBody ProjectResourceDetail projectResourceDetail) {
         projectResourceDetailService.create(projectResourceDetail);
         return ResponseEntity.ok("Success");
     }
 
     @GetMapping("/prd/listByProject/{id}")
-    public List<ProjectResourceDetail> list(@PathVariable("id") Integer projectId) {
-        return projectResourceDetailService.getAllResourcesByProjectId(projectId);
+    public List<ProjectResourceDetail> list(@PathVariable("id") Integer id) {
+        return projectResourceDetailService.getAllResourcesByProject(id);
     }
 
-    @GetMapping("/prd/findById/{id}")
+    @GetMapping("/prd/find/{id}")
     public ProjectResourceDetail findById(@PathVariable("id") Integer id) {
-        return projectResourceDetailService.getResourceDetailById(id);
+        return projectResourceDetailService.getResourceDetailByProject(id);
     }
 
     @PutMapping("/prd/update/{id}")

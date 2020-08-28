@@ -22,7 +22,6 @@ public class Extracolumn {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "name", nullable = false, length = 50)
     public String getName() {
         return name;
@@ -32,7 +31,6 @@ public class Extracolumn {
         this.name = name;
     }
 
-    @Basic
     @Column(name = "type", nullable = false, length = 50)
     public String getType() {
         return type;
@@ -57,7 +55,6 @@ public class Extracolumn {
         return Objects.hash(id, name, type);
     }
 
-    @Basic
     @Column(name = "projectid", nullable = false)
     public Integer getProjectid() {
         return projectid;
