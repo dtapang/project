@@ -5,6 +5,7 @@ public class SignupRequest {
     private String password;
     private String lastname;
     private String firstname;
+
     private int role;
 
     public String getPassword() {
@@ -37,6 +38,14 @@ public class SignupRequest {
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public int getRole() {
